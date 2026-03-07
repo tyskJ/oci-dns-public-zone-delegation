@@ -123,6 +123,25 @@ Amazon Route 53 で管理しているドメインのサブドメインを OCI DN
   --force --empty \
   --profile ADMIN --auth security_token
 
+番外編
+=====================================================================
+コンパートメント削除失敗
+---------------------------------------------------------------------
+* コンパートメント削除に失敗する場合、対象コンパートメントに属するリソースが存在することが原因です
+* その場合、以下コマンドを実行し存在するリソース一覧を確認し削除してください
+
+.. code-block:: bash
+
+  oci search resource structured-search \
+  --query-text "query all resources where compartmentId = 'コンパートメントOCID'" \
+  --profile ADMIN \
+  --auth security_token \
+  --query "data.items[].{identifier:identifier, resource_type:\"resource-type\"}"
+
+.. note::
+
+  * コンパートメントOCIDは、適宜調査対象の値に置き換えてください
+
 参考資料
 =====================================================================
 リファレンス
